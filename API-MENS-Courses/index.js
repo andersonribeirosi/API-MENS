@@ -20,14 +20,26 @@ function checkCurso(req, res, next) {
     return next();
 }
 
+//Middleware index
+function checkIndexCurso(req, res, next){
+    const curso = cursos[req.params.id];
+    if(!curso){
+        return res.status(400).json({error: "Curso não encontrado"})
+    }
+
+    req.curso = curso;
+    return next();
+}
+
 api.get('/cursos', (req, res) => {
     return res.json(cursos);
 });
 
-api.get('/cursos/:id', (req, res) => {
-    const { id } = req.params;
+api.get('/cursos/:id', checkIndexCurso, (req, res) => {
+    // const { id } = req.params;
 
-    return res.json(cursos[id]);
+    // return res.json(cursos[id]);
+    return res.json(req.curso)
 })
 
 api.post('/cursos', checkCurso, (req, res) => {
@@ -38,7 +50,7 @@ api.post('/cursos', checkCurso, (req, res) => {
     return res.json(cursos);
 });
 
-api.delete('/cursos/:id', (req, res) => {
+api.delete('/cursos/:id', checkIndexCurso, (req, res) => {
     const { id } = req.params;
 
     cursos.splice(id, 1);
