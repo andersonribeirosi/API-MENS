@@ -1,7 +1,7 @@
 import {Schema, model } from 'mongoose';
 
 const HouseSchema = new Schema({
-    thumbnail: String,
+    // thumbnail: String,
     description: String,
     price: Number,
     location: String,
@@ -11,3 +11,5 @@ const HouseSchema = new Schema({
         ref: 'User'
     }
 })
+
+export default model('House', HouseSchema);

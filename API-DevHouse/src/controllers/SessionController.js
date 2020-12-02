@@ -25,6 +25,13 @@ class SessionControler {
         return res.json(user);
     }
 
+    async users(req, res) {
+
+        let users = await User.find({});
+
+        return res.json(users);
+    }
+
 }
 
-export default new SessionControler;
+export default new SessionControler();
